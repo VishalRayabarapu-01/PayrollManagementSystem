@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>LoginPage</title>
+	<link rel="stylesheet" href="/contents/styles.css">
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<img src="/images/loginLogo.png" alt="Profile-pic">
+		<form action="/auth/signin" method="post">
+			<div class="input_box">
+				<input type="text" name="username" placeholder="User Name">
+			</div>
+			<div class="input_box">
+				<input type="password" name="password" placeholder="Password">
+			</div>
+			<input type="submit" name="submit" value="Login" class="submit_btn">
+		</form>
+		<br>
+		<th:block th:if="${param.error}">
+			<script>
+				swal("Error", "Invalid username or password !", "error")
+			</script>
+		</th:block>
+		<a href="#" class="for_pass">Forgot Password</a>
+	</div>
+</body>
+
+</html>
