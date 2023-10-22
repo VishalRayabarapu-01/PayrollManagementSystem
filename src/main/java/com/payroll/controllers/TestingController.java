@@ -103,7 +103,7 @@ public class TestingController {
 	@PostMapping("/addEmp")
 	public ResponseEntity<?> dUsers(@RequestBody Employee employee,@RequestParam int deptId,@RequestParam String name) {
 		System.out.println(employee+"   "+deptId+"  "+name);
-		String addEmployee = employeeService.addEmployee(employee,deptId,name);
+		boolean addEmployee = employeeService.addEmployee(employee,deptId,name);
 		return new ResponseEntity<>(addEmployee, HttpStatus.OK);
 	}
 }

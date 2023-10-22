@@ -32,4 +32,9 @@ public class Designation {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "designation")
 	@JsonManagedReference(value = "designation-ref")
 	private List<Employee> employees=new LinkedList<>();
+
+	@Override
+	public String toString() {
+		return "Designation [designationName=" + designationName + "]";
+	}	
 }

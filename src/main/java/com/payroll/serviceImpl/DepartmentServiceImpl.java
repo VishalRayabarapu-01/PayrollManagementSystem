@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.payroll.entities.Department;
+import com.payroll.excepitons.DepartmentException;
 import com.payroll.repository.DepartmentRepository;
 import com.payroll.service.DepartmentService;
 
@@ -18,8 +19,10 @@ public class DepartmentServiceImpl implements DepartmentService{
 	
 	@Override
 	public boolean addDepartment(Department department) {
-		
 		boolean flag=validateDepartment(department.getDepartmentId());
+		if(flag) {
+			throw new DepartmentException("Department Already exists.","Adding Department");
+		}
 		if(!flag)
 		{
 			Department save = departmentRepository.save(department);
@@ -32,7 +35,7 @@ public class DepartmentServiceImpl implements DepartmentService{
 				return false;
 			}
 		}
-			return false;		
+		return false;
 	}
 
 	@Override
@@ -52,9 +55,11 @@ public class DepartmentServiceImpl implements DepartmentService{
 
 	@Override
 	public boolean updateDepartment(Department department) {
-		
+		boolean flag=validateDepartment(department.getDepartmentId());
+		if(!flag) {
+			throw new DepartmentException("For adding new Department go to Department => Add", "Updating department");
+		}
 		Department save = departmentRepository.save(department);
-		
 		if(save!=null)
 		{
 			return true;
@@ -75,8 +80,9 @@ public class DepartmentServiceImpl implements DepartmentService{
 		Optional<Department> optional = departmentRepository.findById(departmentId);
 		if(optional.isPresent()) {
 			return optional.get();
+		}else {
+			throw new DepartmentException("Department id doesn't exist","fetching department details");
 		}
-		return null;
 	}
 	
 	public boolean validateDepartment(int id)

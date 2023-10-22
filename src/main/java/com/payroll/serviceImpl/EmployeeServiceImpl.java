@@ -10,6 +10,8 @@ import com.payroll.entities.Department;
 import com.payroll.entities.Designation;
 import com.payroll.entities.Employee;
 import com.payroll.entities.User;
+import com.payroll.excepitons.DepartmentException;
+import com.payroll.excepitons.DesignationException;
 import com.payroll.repository.DepartmentRepository;
 import com.payroll.repository.DesignationRepository;
 import com.payroll.repository.EmployeeRepository;
@@ -37,7 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	// adding employee wants department id , design id .
 	@Override
-	public String addEmployee(Employee employee,int departmentId, String designationName) {
+	public boolean addEmployee(Employee employee,int departmentId, String designationName) {
 		
 		boolean flag = validateEmployee(employee.getEmployeeId());
 		if (!flag) {
@@ -46,12 +48,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 			if (optional.isPresent()) {
 				department = optional.get();
 			} else {
-				return "Department doesn't exits with ID :" + employee.getDepartment().getDepartmentId();
+				throw new DepartmentException( "Department doesn't exits with ID :" + employee.getDepartment().getDepartmentId(),"Adding employee");
 			}
 			// adding designation.
 			Designation designation = designationService.getDesignation(designationName);
 			if (designation == null) {
-				return "Designation not found with Name:" + designationName;
+				throw new DesignationException("Designation not found with Name:" + designationName,"Adding employee");
 			}
 			employee.setDepartment(department);
 			employee.setDesignation(designation);
@@ -60,12 +62,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 			//here we should not save multiple object like above add only once.
 			if ((save.toString().equals(department.toString()))) {
 				loginUserRepository.save(new User(employee.getEmployeeId(),employee.getPassword(),"ROLE_EMPLOYEE"));
-				return "true";
+				return true;
 			} else {
-				return "false";
+				return false;
 			}
 		}
-		return "false";
+		return false;
 	}
 
 	@Override

@@ -20,7 +20,13 @@ public class Salary {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int salaryId;
 	private Double basicSalary;
-	private Double hra, da, pf, incomeTaxPercentage;
+	private Double hra, da, pf,incomeTaxPercentage;
 	private Double healthinsurance, overTimePerHourPay;
+	@Override
+	public String toString() {
+		return "Salary [basicSalary=" + basicSalary + ", hra=" + hra + ", da=" + da + ", pf=" + pf
+				+ ", incomeTaxPercentage=" + incomeTaxPercentage + ", healthinsurance=" + healthinsurance
+				+ ", overTimePerHourPay=" + overTimePerHourPay + "]";
+	}
 	
 }

@@ -9,7 +9,7 @@ import com.payroll.entities.Attendence;
 @Service
 public interface AttendenceService {
 
-	boolean addAttendence(Attendence attendence,int employeeId);
+	boolean addAttendence(Attendence attendence,String employeeId);
 	
 	boolean deleteAttendence(int attendenceId);
 	

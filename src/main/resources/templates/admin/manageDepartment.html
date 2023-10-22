@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<span data-th-insert="~{base::links}"></span>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="${indexName}"></title>
+</head>
+
+<body>
+	<div class="text-white p-2" style="background: #1a9b85;">
+		<h3 style="font-family: 'Roboto'">Payroll Management System</h3>
+	</div>
+	<nav th:replace="~{base::adminNavs}"></nav>
+	<div class="text-center p-3">
+		<span style="font-family: 'Lora' ; font-size: x-large;">Viewing Departments :-</span>
+	</div>
+	<div class="container p-2">
+		<table class="table table-hover overflow-scroll">
+			<thead>
+				<tr class="text-center">
+					<th scope="col">Department Id</th>
+					<th scope="col">Department Name</th>
+					<th scope="col">Edit</th>
+					<th scope="col">Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="text-center" th:if="${listOfDepartments}" th:each="list : ${listOfDepartments}">
+					<td th:text="'#NUM'+${list.departmentId}"></td>
+					<td th:text="${list.departmentName}"></td>
+					<td>
+						<form method="post" th:action="@{'/admin/editDepartment/'+${list.departmentId}}">
+							<button type="submit" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-eye"></i>
+								Edit</button>
+						</form>
+					</td>
+					<td>
+						<button th:onclick="'clickedBtn('+${list.departmentId}+')'"
+							class="btn btn-sm btn-outline-danger">
+							<i class="fa-solid fa-circle-xmark"></i> Delete
+						</button>
+						<a class="invisible" th:id="${list.departmentId}"
+							th:href="@{'/admin/deleteDepartment/'+${list.departmentId}}"></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="text-center" th:unless="${listOfDepartments}">
+			<img src="/images/noData.jpg" class="img-fluid " alt="" />
+		</div>
+	</div>
+	<script>
+		const clickedBtn = (departmentId) => {
+			Swal.fire({
+				title: 'Are you sure?',
+				text: "Deleting department removes all employees present in department !!!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes, delete it!'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					let link = document.getElementById(departmentId + "");
+					if (link) {
+						link.click();
+					}
+				}
+			})
+		}
+	</script>
+	<th:block th:if="${message}">
+		<script>
+			var msg = '[[${message}]]';
+			swal("Error", msg, "error");
+		</script>
+	</th:block>
+	<th:block th:if="${submitOk}">
+		<script>
+			var msg = '[[${submitOk}]]';
+			swal("Success", msg, "success");
+		</script>
+	</th:block>
+</body>
+
+</html>

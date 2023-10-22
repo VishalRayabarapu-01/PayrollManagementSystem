@@ -42,5 +42,14 @@ public class PayRoll {
 	@ManyToOne
 	@JsonBackReference(value="payroll-ref")
 	Employee employee;
+
+	@Override
+	public String toString() {
+		return "PayRoll [payDate=" + payDate + ", workingDays=" + workingDays + ", presentDays=" + presentDays
+				+ ", basicSalary=" + basicSalary + ", hra=" + hra + ", da=" + da + ", pf=" + pf + ", incomeTaxAmount="
+				+ incomeTaxAmount + ", lossOfPay=" + lossOfPay + ", overTimeHoursWorked=" + overTimeHoursWorked
+				+ ", overTimeAmount=" + overTimeAmount + ", grossSalary=" + grossSalary + ", totalDeductions="
+				+ totalDeductions + ", netSalary=" + netSalary + ", remarks=" + remarks + "]";
+	}
 	
 }

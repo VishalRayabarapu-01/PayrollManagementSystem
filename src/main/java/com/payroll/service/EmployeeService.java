@@ -9,7 +9,7 @@ import com.payroll.entities.Employee;
 @Service
 public interface EmployeeService {
 
-	String addEmployee(Employee employee,int departmentId,String designationName);
+	boolean addEmployee(Employee employee,int departmentId,String designationName);
 	
 	boolean deleteEmployee(String employeeId);
 	

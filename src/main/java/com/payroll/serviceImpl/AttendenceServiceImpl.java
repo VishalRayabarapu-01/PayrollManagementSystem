@@ -7,77 +7,71 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.payroll.entities.Attendence;
+import com.payroll.entities.Employee;
+import com.payroll.excepitons.EmployeeException;
 import com.payroll.repository.AttendenceRepository;
 import com.payroll.repository.EmployeeRepository;
 import com.payroll.service.AttendenceService;
 
 @Service
-public class AttendenceServiceImpl implements AttendenceService{
+public class AttendenceServiceImpl implements AttendenceService {
 
 	@Autowired
 	AttendenceRepository attendenceRepository;
-	
+
 	@Autowired
 	EmployeeRepository employeeRepository;
-	
+
 	@Override
-	public boolean addAttendence(Attendence attendence,int employeeId) {
-		
-//		boolean flag=validateAttendence(attendence.getAttendanceId());
-//		
-//		if(!flag)
-//		{
-//			Optional<Employee> optional = employeeRepository.findById(employeeId);
-//			
-//			Employee employee = optional.get();
-//			 employee.getAttendence().add(attendence);
-//			 
-//			 employeeRepository.save(employee);
-//			 
-//			 attendenceRepository.save(attendence);
-//			 System.out.println(employee);
-//			
-//		}
+	public boolean addAttendence(Attendence attendence, String employeeId) {
+
+		boolean flag = validateAttendence(attendence.getAttendanceId());
+
+		if (!flag) {
+			Optional<Employee> optional = employeeRepository.findById(employeeId);
+			if (optional.isEmpty()) {
+				throw new EmployeeException("Invalid employee id :" + employeeId, "Adding attendence");
+			}
+			Employee employee = optional.get();
+			employee.getAttendence().add(attendence);
+			Employee save = employeeRepository.save(employee);
+			if(save.toString().equals(employee.toString())) {
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public boolean deleteAttendence(int attendenceId) {
-		// TODO Auto-generated method stub
-		return false;
+		attendenceRepository.deleteById(attendenceId);
+		return true;
 	}
 
 	@Override
-	public boolean updateAttendence(int attendenceId,Attendence attendence) {
+	public boolean updateAttendence(int attendenceId, Attendence attendence) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public List<Attendence> getAllAttendences() {
-		// TODO Auto-generated method stub
-		return null;
+		return attendenceRepository.findAll();
 	}
 
 	@Override
 	public Attendence getAttendence(int attendenceId) {
-
-		Attendence attendence = attendenceRepository.findById(attendenceId).get();
-		
-		
-		
-		return attendence;
+		Optional<Attendence> optional = attendenceRepository.findById(attendenceId);
+		if(optional.isPresent()) {
+			return optional.get();
+		}
+		return null;
 	}
-	
-	public boolean validateAttendence(int id)
-	{
-		Optional<Attendence> optional = attendenceRepository.findById(id);
-		
-		if(optional.isPresent())
-		{
+
+	public boolean validateAttendence(int id) {
+		if (attendenceRepository.findById(id).isPresent()) {
 			return true;
 		}
-		
 		return false;
 	}
 

@@ -5,13 +5,14 @@
 }
 
 body{
-  background: url(/images/LoginBackground.jpg) no-repeat center;
-  
+  background: url(/images/loginImg.png) no-repeat;
+  backdrop-filter: blur(10px);
+  height: 98vh;
   background-attachment: fixed;
   background-size: cover;
 }
 
-.container{
+.containers{
   width: 500px;
   height: 400px;
   margin: 0px auto;
@@ -20,7 +21,7 @@ body{
   background-color: rgba(95, 158, 160, 0.43);
 }
 
-.container img{
+.containers img{
   width: 120px;
   height: 120px;
   margin-top:-50px;
@@ -39,7 +40,6 @@ input[type="text"],input[type="password"]{
   content:url(/images/user-Login.png);
   position: absolute;
   padding: 3.2px;
-  background-color: rgba(219, 116, 40, 0.33);
 }
 
 .input_box:nth-child(3)::before{

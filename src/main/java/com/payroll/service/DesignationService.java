@@ -20,4 +20,6 @@ public interface DesignationService {
 	Designation getDesignation(int designationId);
 	
 	Designation getDesignation(String name);
+	
+	Designation getDesignationWithName(String name);
 }

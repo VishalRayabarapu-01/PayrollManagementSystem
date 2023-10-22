@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<span data-th-insert="~{base::links}"></span>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admin Home Page</title>
+	<style>
+		.custom-button {
+			width: 120px;
+			text-decoration: none;
+			border-radius: 10px;
+			background: #445a64;
+			color: #fff;
+			text-align: center;
+			padding: 10px 20px;
+			cursor: pointer;
+			transition: background-color 0.3s, color 0.3s;
+		}
+
+		.custom-button:hover {
+			background-color: #1a9b85;
+			color: #fff;
+			border: none;
+		}
+
+		@media screen and (min-width: 480px) {
+			.addGap{
+				width: 16.66666667%;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="text-center m-3 p-1" style="font-family: 'Roboto';font-weight: bolder;font-size: xx-large;">Payroll
+		Management System</div>
+	<div class="row mt-5" style="margin-right: 0px;">
+		<div class="col-md m-5 mx-0 p-4">
+			<div class="row mt-5"></div>
+			<div class="row mt-2">
+				<div class="addGap"></div>
+				<div class="col">
+					<h1 style="font-family: 'Playpen Sans';">Payroll</h1>
+					<p class="mt-3" style="font-family: 'Poppins','Playfair Display', 'Montserrat'; font-size: large;">
+						Streamline your payroll with our user-friendly Payroll Management System. Say goodbye to manual
+						calculations and ensure accurate, on-time payments.</p>
+					<div class="text-center mt-3"><a class="mt-4 btn btn-lg custom-button" href="/auth/signin">Login</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-7 m-3 pt-3">
+			<img src="/images/payrollHomepage.png" class="img-fluid" alt="" />
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,29 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
 	<title>LoginPage</title>
 	<link rel="stylesheet" href="/contents/styles.css">
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<span data-th-insert="~{base::links}"></span>
 </head>
+
 <body>
-	<div class="container">
-		<img src="/images/loginLogo.png" alt="Profile-pic">
-		<form action="/auth/signin" method="post">
-			<div class="input_box">
-				<input type="text" name="username" placeholder="User Name">
+	<div class="text-center m-3 p-1" style="font-family: 'Roboto';font-weight: bolder;font-size: xx-large;">Payroll
+		Management System</div>
+	<div class="">
+		<div class="text-center">
+			<div class="containers rounded">
+				<img src="/images/loginLogo.png" alt="Profile-pic">
+				<form action="/auth/signin" method="post">
+					<div class="input_box">
+						<input class="rounded" type="text" name="username" placeholder="User Name">
+					</div>
+					<div class="input_box">
+						<input class="rounded" type="password" name="password" placeholder="Password">
+					</div>
+					<input type="submit" name="submit" value="Login" class="submit_btn rounded">
+				</form>
+				<br>
+				<th:block th:if="${param.error}">
+					<script>
+						swal("Error", "Invalid username or password !", "error")
+					</script>
+				</th:block>
+				<a href="#" class="for_pass text-dark">Forgot Password</a>
 			</div>
-			<div class="input_box">
-				<input type="password" name="password" placeholder="Password">
-			</div>
-			<input type="submit" name="submit" value="Login" class="submit_btn">
-		</form>
-		<br>
-		<th:block th:if="${param.error}">
+		</div>
+		<th:block th:if="${param.logout}">
 			<script>
-				swal("Error", "Invalid username or password !", "error")
+				swal("Success", "You have been logged out !", "success");
 			</script>
 		</th:block>
-		<a href="#" class="for_pass">Forgot Password</a>
 	</div>
 </body>
 

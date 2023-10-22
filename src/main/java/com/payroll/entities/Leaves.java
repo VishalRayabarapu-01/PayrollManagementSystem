@@ -40,5 +40,11 @@ public class Leaves {
 	@ManyToOne
 	@JsonBackReference(value="leaves-ref")
 	Employee employee;
-	
+
+	@Override
+	public String toString() {
+		return "Leaves [leaveType=" + leaveType + ", leaveStartDate=" + leaveStartDate + ", leaveEndDate="
+				+ leaveEndDate + ", days=" + days + ", leavepurpose=" + leavepurpose + ", leaveStatus=" + leaveStatus
+				+ "]";
+	}
 }

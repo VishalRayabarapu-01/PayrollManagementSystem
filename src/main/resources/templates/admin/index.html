@@ -2,92 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Admin Home Page</title>
-
-	<link rel="stylesheet" href="/contents/styles.css">
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<title th:text="${indexName}"></title>
+	<span data-th-insert="~{base::links}"></span>
 </head>
 
 <body>
-	<div class="bg-primary text-white text-center p-2">
-		<h1>ADMIN</h1>
+	<div class="text-white p-2" style="background: #1a9b85;">
+		<h3 style="font-family: 'Roboto'">Payroll Management System</h3>
 	</div>
-	<nav class="navbar navbar-expand-lg navbar-success bg-light mt-3 p-3">
-		<a class="navbar-brand" href="#">Home</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-			aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav">
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="departmentDropdown" role="button"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Department
-					</a>
-					<div class="dropdown-menu" aria-labelledby="departmentDropdown">
-						<a class="dropdown-item" href="#">Item 1</a>
-						<a class="dropdown-item" href="#">Item 2</a>
-						<a class="dropdown-item" href="#">Item 3</a>
-						<a class="dropdown-item" href="#">Item 4</a>
-					</div>
-				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="designationDropdown" role="button"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Designation
-					</a>
-					<div class="dropdown-menu" aria-labelledby="designationDropdown">
-						<a class="dropdown-item" href="#">Item 1</a>
-						<a class="dropdown-item" href="#">Item 2</a>
-						<a class="dropdown-item" href="#">Item 3</a>
-						<a class="dropdown-item" href="#">Item 4</a>
-					</div>
-				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="employeeDropdown" role="button"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Employee
-					</a>
-					<div class="dropdown-menu" aria-labelledby="employeeDropdown">
-						<a class="dropdown-item" href="#">Item 1</a>
-						<a class="dropdown-item" href="#">Item 2</a>
-						<a class="dropdown-item" href="#">Item 3</a>
-						<a class="dropdown-item" href="#">Item 4</a>
-					</div>
-				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="salaryDropdown" role="button"
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Salary
-					</a>
-					<div class="dropdown-menu" aria-labelledby="salaryDropdown">
-						<a class="dropdown-item" href="#">Item 1</a>
-						<a class="dropdown-item" href="#">Item 2</a>
-						<a class="dropdown-item" href="#">Item 3</a>
-						<a class="dropdown-item" href="#">Item 4</a>
-					</div>
-				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link" href="#">Leaves</a>
-				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link" href="#">Overtime</a>
-				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link" href="#">Attendance</a>
-				</li>
-				<li class="nav-item dropdown">
-					<a class="nav-link" href="#">Payroll</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link text-danger" href="#">Logout</a>
-				</li>
-			</ul>
-		</div>
-	</nav>
+	<nav th:replace="~{base::adminNavs}"></nav>
+	<div class="text-center m-5">
+		<img src="/images/adminHome.jpeg" class="img-fluid rounded" alt="" />
+	</div>
 </body>
-
 </html>

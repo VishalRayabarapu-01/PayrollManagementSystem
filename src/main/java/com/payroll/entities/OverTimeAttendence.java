@@ -34,5 +34,10 @@ public class OverTimeAttendence {
 	@ManyToOne
 	@JsonBackReference(value="OverTimeAttendence-ref")
 	Employee overTimeAttendence;
+
+	@Override
+	public String toString() {
+		return "OverTimeAttendence [date=" + date + ", inTime=" + inTime + ", OutTime=" + OutTime + "]";
+	}
 	
 }

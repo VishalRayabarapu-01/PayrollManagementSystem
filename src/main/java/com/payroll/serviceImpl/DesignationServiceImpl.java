@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.payroll.entities.Designation;
+import com.payroll.excepitons.DesignationException;
 import com.payroll.repository.DesignationRepository;
 import com.payroll.service.DesignationService;
 
@@ -20,11 +21,12 @@ public class DesignationServiceImpl implements DesignationService{
 	public boolean addDesignation(Designation designation) {
 		
 		boolean flag=validateDesignation(designation.getDesignationId());
-		
+		if(flag) {
+			throw new DesignationException("Designation Already exists.","Adding Designation");
+		}
 		if(!flag)
 		{
 			Designation save = designationRepository.save(designation);
-			
 			if(save.toString().equals(designation.toString()))
 			{
 				return true;
@@ -55,7 +57,10 @@ public class DesignationServiceImpl implements DesignationService{
 
 	@Override
 	public boolean updateDesignation(Designation designation) {
-		
+		boolean flag=validateDesignation(designation.getDesignationId());
+		if(!flag) {
+			throw new DesignationException("For adding new Designation go to Designation => Add", "Updating Designation");
+		}
 		Designation save = designationRepository.save(designation);
 		
 		if(save!=null)
@@ -68,8 +73,6 @@ public class DesignationServiceImpl implements DesignationService{
 
 	@Override
 	public List<Designation> getAllDesignations() {
-		
-		
 		return designationRepository.findAll();
 	}
 
@@ -80,14 +83,25 @@ public class DesignationServiceImpl implements DesignationService{
 		if(optional.isPresent()) {
 			return optional.get();
 		}
-		return null;
+		else {
+			throw new DesignationException("Designation id doesn't exist","fetching Designation details");
+		}
 	}
 	
 	@Override
 	public Designation getDesignation(String designationName) {
 		Designation designation = designationRepository.getDesignationBydesignationName(designationName);
+		if(designation==null) {
+			throw new DesignationException("Designation Name doesn't exist","fetching Designation details");
+		}
 		return designation;
 	}
+	
+	public Designation getDesignationWithName(String designationName) {
+		Designation designation = designationRepository.getDesignationBydesignationName(designationName);
+		return designation;
+	}
+	
 	public boolean validateDesignation(int id)
 	{
 		Optional<Designation> optional = designationRepository.findById(id);
