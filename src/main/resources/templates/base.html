@@ -22,7 +22,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	</div>
 	<div>
-		<nav class="navbar navbar-expand-lg navbar-success bg-light p-3" th:fragment="adminNavs">
+		<nav class="navbar navbar-expand-lg navbar-success bg-light p-3" th:fragment="employeeNavs">
 			<a class="navbar-brand" href="/admin/index">Home</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
 				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,8 +56,8 @@
 							Employee
 						</a>
 						<div class="dropdown-menu" aria-labelledby="employeeDropdown">
-							<a class="dropdown-item" href="#">Add</a>
-							<a class="dropdown-item" href="#">Manage</a>
+							<a class="dropdown-item" href="/admin/addEmployee">Add</a>
+							<a class="dropdown-item" href="/admin/manageEmployee">Manage</a>
 						</div>
 					</li>
 					<li class="nav-item dropdown">
@@ -66,8 +66,8 @@
 							Salary
 						</a>
 						<div class="dropdown-menu" aria-labelledby="salaryDropdown">
-							<a class="dropdown-item" href="#">Add</a>
-							<a class="dropdown-item" href="#">Manage</a>
+							<a class="dropdown-item" href="/admin/addSalary">Add</a>
+							<a class="dropdown-item" href="/admin/manageSalary">Manage</a>
 						</div>
 					</li>
 					<li class="nav-item dropdown">
@@ -76,8 +76,8 @@
 							Attendence
 						</a>
 						<div class="dropdown-menu" aria-labelledby="employeeDropdown">
-							<a class="dropdown-item" href="#">Add</a>
-							<a class="dropdown-item" href="#">Manage</a>
+							<a class="dropdown-item" href="/admin/addAttendence">Add</a>
+							<a class="dropdown-item" href="/admin/manageAttendence">Manage</a>
 						</div>
 					</li>
 					<li class="nav-item dropdown">
@@ -86,8 +86,8 @@
 							Overtime Attendence
 						</a>
 						<div class="dropdown-menu" aria-labelledby="employeeDropdown">
-							<a class="dropdown-item" href="#">Add</a>
-							<a class="dropdown-item" href="#">Manage</a>
+							<a class="dropdown-item" href="/admin/addOverTimeAttendence">Add</a>
+							<a class="dropdown-item" href="/admin/manageOverTimeAttendence">Manage</a>
 						</div>
 					</li>
 					<li class="nav-item dropdown">
@@ -101,7 +101,7 @@
 						</div>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="">Leaves</a>
+						<a class="nav-link" href="/admin/showLeaves">Leaves</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link text-danger" href="/logout">Logout</a>

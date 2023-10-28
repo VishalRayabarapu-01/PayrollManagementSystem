@@ -14,40 +14,39 @@
 	</div>
 	<nav th:replace="~{base::adminNavs}"></nav>
 	<div class="text-center p-3">
-		<span style="font-family: 'Lora' ; font-size: x-large;">Viewing Designations :-</span>
+		<span style="font-family: 'Lora' ; font-size: x-large;">Viewing Overtime Attendence :-</span>
 	</div>
 	<div class="container p-2">
 		<table class="table table-hover overflow-scroll">
 			<thead>
 				<tr class="text-center">
-					<th scope="col">Designation Id</th>
-					<th scope="col">Designation Name</th>
-					<th scope="col">Edit</th>
+					<th scope="col">Overtime Attendence Id</th>
+					<th scope="col">Date</th>
+					<th scope="col">InTime</th>
+					<th scope="col">OutTime</th>
+					<th scope="col">Employee id</th>
 					<th scope="col">Delete</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr style="font-family: 'Poppins';" class="text-center" th:if="${listOfDesignations}" th:each="list : ${listOfDesignations}">
-					<td th:text="'#NUM'+${list.designationId}"></td>
-					<td th:text="${list.designationName}"></td>
+				<tr style="font-family: 'Poppins';" class="text-center" th:if="${listOfAttendences}" th:each="list : ${listOfAttendences}">
+					<td th:text="'#NUM'+${list.overtimeId}"></td>
+					<td th:text="${list.date}"></td>
+					<td th:text="${list.inTime}"></td>
+					<td th:text="${list.outTime}"></td>
+					<td th:text="${list.overTimeAttendence.employeeId}"></td>
 					<td>
-						<form method="post" th:action="@{'/admin/editDesignation/'+${list.designationId}}">
-							<button type="submit" class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i>
-								Edit</button>
-						</form>
-					</td>
-					<td>
-						<button th:onclick="'clickedBtn('+${list.designationId}+')'"
+						<button th:onclick="'clickedBtn('+${list.overtimeId}+')'"
 							class="btn btn-sm btn-outline-danger">
 							<i class="fa-solid fa-circle-xmark"></i> Delete
 						</button>
-						<a class="invisible" th:id="${list.designationId}"
-							th:href="@{'/admin/deleteDesignation/'+${list.designationId}}"></a>
+						<a class="invisible" th:id="${list.overtimeId}"
+							th:href="@{'/admin/deleteOvertimeAttendence/'+${list.overtimeId}}"></a>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		<div class="text-center" th:unless="${listOfDesignations}">
+		<div class="text-center" th:unless="${listOfAttendences}">
 			<img src="/images/noData.jpg" class="img-fluid " alt="" />
 		</div>
 	</div>

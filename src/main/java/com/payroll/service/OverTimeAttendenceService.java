@@ -8,11 +8,13 @@ import java.util.List;
 @Service
 public interface OverTimeAttendenceService {
 
-	boolean addOverTimeAttendence(OverTimeAttendence overTimeAttendence);
+	boolean addOverTimeAttendence(OverTimeAttendence overTimeAttendence, String employeeId);
 	
 	boolean updateOverTimeAttendence(int overtimeId);
 	
 	boolean deleteOverTimeAttendence(int overtimeId);
+	
+	OverTimeAttendence getOvertimeAttendence(int id);
 	
 	List<OverTimeAttendence> getAllOvertimeAttendenceDetails();
 	

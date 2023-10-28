@@ -1,6 +1,5 @@
 package com.payroll.entities;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,14 +22,14 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Employee {
-
+	
 	@Id
 	private String employeeId;
 	private String firstName;
 	private String lastName;
 	private String gender;
 	private String mobile;
-	private Date dateOfBirth;
+	private String dateOfBirth;
 	private String contactAddress;
 	private String password;
 	private String employeePic;
@@ -66,5 +65,18 @@ public class Employee {
 				+ contactAddress + ", password=" + password + ", employeePic=" + employeePic + "]";
 	}
 
-	
+	public boolean isValidDetails() {
+		boolean employeeId=(this.employeeId.equals(""));
+		boolean firstName=this.firstName.equals("");
+		boolean lastName=this.lastName.equals("");
+		boolean gender=this.gender.equals("");
+		boolean mobile=this.mobile.equals("");
+		boolean dateOfBirth=this.dateOfBirth.equals("");
+		boolean contactAddress=this.contactAddress.equals("");
+		boolean password=this.password.equals("");
+		if(employeeId || firstName|| lastName||gender|| mobile||dateOfBirth||contactAddress||password) {
+			return false;
+		}
+		return true;
+	}
 }

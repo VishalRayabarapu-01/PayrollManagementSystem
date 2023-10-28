@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.payroll.entities.Attendence;
 import com.payroll.entities.Employee;
+import com.payroll.excepitons.AttendenceException;
 import com.payroll.excepitons.EmployeeException;
 import com.payroll.repository.AttendenceRepository;
 import com.payroll.repository.EmployeeRepository;
@@ -44,7 +45,9 @@ public class AttendenceServiceImpl implements AttendenceService {
 
 	@Override
 	public boolean deleteAttendence(int attendenceId) {
-		attendenceRepository.deleteById(attendenceId);
+		Attendence attendence = attendenceRepository.findById(attendenceId).orElseThrow(()->new AttendenceException("Invalid Attendence id ","Occured while deleting attendence !!!!"));
+		attendence.setEmployeeAttendence(null);
+		attendenceRepository.delete(attendence);
 		return true;
 	}
 

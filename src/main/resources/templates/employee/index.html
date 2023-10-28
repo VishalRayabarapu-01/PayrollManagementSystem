@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:text="${indexName}"></title>
+	<span data-th-insert="~{base::links}"></span>
+</head>
+
+<body>
+	<div class="text-white p-2" style="background: #1a9b85;">
+		<h3 style="font-family: 'Roboto'">Payroll Management System</h3>
+	</div>
+	<nav th:replace="~{base::employeeNavs}"></nav>
+	<div class="text-center m-5">
+		<img src="/images/employeeHome.jpg" class="img-fluid rounded" alt="" />
+	</div>
+</body>
+</html>

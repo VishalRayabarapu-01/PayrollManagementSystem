@@ -14,48 +14,45 @@
 	</div>
 	<nav th:replace="~{base::adminNavs}"></nav>
 	<div class="text-center p-3">
-		<span style="font-family: 'Lora' ; font-size: x-large;">Viewing Designations :-</span>
+		<span style="font-family: 'Lora' ; font-size: x-large;">Viewing Departments :-</span>
 	</div>
 	<div class="container p-2">
 		<table class="table table-hover overflow-scroll">
 			<thead>
 				<tr class="text-center">
-					<th scope="col">Designation Id</th>
-					<th scope="col">Designation Name</th>
-					<th scope="col">Edit</th>
+					<th scope="col">Attendence id</th>
+					<th scope="col">Date</th>
+					<th scope="col">Attendence Status</th>
+					<th scope="col">Employee id</th>
 					<th scope="col">Delete</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr style="font-family: 'Poppins';" class="text-center" th:if="${listOfDesignations}" th:each="list : ${listOfDesignations}">
-					<td th:text="'#NUM'+${list.designationId}"></td>
-					<td th:text="${list.designationName}"></td>
+				<tr style="font-family: 'Poppins';" class="text-center" th:if="${listOfAttendence}" th:each="list : ${listOfAttendence}">
+					<td th:text="'#NUM'+${list.attendanceId}"></td>
+					<td th:text="${list.date}"></td>
+					<td th:text="${list.attendanceStatus}"></td>
+					<td th:text="${list.employeeAttendence.employeeId}"></td>
 					<td>
-						<form method="post" th:action="@{'/admin/editDesignation/'+${list.designationId}}">
-							<button type="submit" class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i>
-								Edit</button>
-						</form>
-					</td>
-					<td>
-						<button th:onclick="'clickedBtn('+${list.designationId}+')'"
+						<button th:onclick="'clickedBtn('+${list.attendanceId}+')'"
 							class="btn btn-sm btn-outline-danger">
 							<i class="fa-solid fa-circle-xmark"></i> Delete
 						</button>
-						<a class="invisible" th:id="${list.designationId}"
-							th:href="@{'/admin/deleteDesignation/'+${list.designationId}}"></a>
+						<a class="invisible" th:id="${list.attendanceId}"
+							th:href="@{'/admin/deleteAttendence/'+${list.attendanceId}}"></a>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		<div class="text-center" th:unless="${listOfDesignations}">
+		<div class="text-center" th:unless="${listOfAttendence}">
 			<img src="/images/noData.jpg" class="img-fluid " alt="" />
 		</div>
 	</div>
 	<script>
-		const clickedBtn = (designationId) => {
+		const clickedBtn = (departmentId) => {
 			Swal.fire({
 				title: 'Are you sure?',
-				text: "Deleting Designation removes all employees present in current designation !!!",
+				text: "Deleting department removes all employees present in department !!!",
 				icon: 'warning',
 				showCancelButton: true,
 				confirmButtonColor: '#3085d6',
@@ -63,7 +60,7 @@
 				confirmButtonText: 'Yes, delete it!'
 			}).then((result) => {
 				if (result.isConfirmed) {
-					let link = document.getElementById(designationId + "");
+					let link = document.getElementById(departmentId + "");
 					if (link) {
 						link.click();
 					}

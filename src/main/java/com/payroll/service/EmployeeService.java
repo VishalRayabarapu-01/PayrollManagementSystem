@@ -11,6 +11,8 @@ public interface EmployeeService {
 
 	boolean addEmployee(Employee employee,int departmentId,String designationName);
 	
+	boolean addEmployeeWithoutAnyCheck(Employee employee);
+	
 	boolean deleteEmployee(String employeeId);
 	
 	boolean updateEmployee(Employee employee);

@@ -19,4 +19,6 @@ public interface DepartmentService {
 	
 	Department getDepartment(int departmentId);
 	
+	boolean validateDepartment(int id);
+	
 }

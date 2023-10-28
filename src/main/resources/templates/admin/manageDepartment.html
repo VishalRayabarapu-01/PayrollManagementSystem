@@ -27,12 +27,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr class="text-center" th:if="${listOfDepartments}" th:each="list : ${listOfDepartments}">
+				<tr style="font-family: 'Poppins';" class="text-center" th:if="${listOfDepartments}" th:each="list : ${listOfDepartments}">
 					<td th:text="'#NUM'+${list.departmentId}"></td>
 					<td th:text="${list.departmentName}"></td>
 					<td>
 						<form method="post" th:action="@{'/admin/editDepartment/'+${list.departmentId}}">
-							<button type="submit" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-eye"></i>
+							<button type="submit" class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i>
 								Edit</button>
 						</form>
 					</td>

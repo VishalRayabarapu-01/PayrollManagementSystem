@@ -1,7 +1,5 @@
 package com.payroll.entities;
 
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
@@ -27,9 +25,9 @@ public class Leaves {
 	
 	private String leaveType;
 	
-	private Date leaveStartDate;
+	private String leaveStartDate;
 	
-	private Date leaveEndDate;
+	private String leaveEndDate;
 	
 	private int days;
 	

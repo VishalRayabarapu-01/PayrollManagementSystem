@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,10 @@ public class Designation {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "designation")
 	@JsonManagedReference(value = "designation-ref")
 	private List<Employee> employees=new LinkedList<>();
+	
+	@OneToOne
+	@JsonManagedReference(value = "salary-ref")
+	Salary salary;
 
 	@Override
 	public String toString() {

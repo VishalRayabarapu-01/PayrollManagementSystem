@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<span data-th-insert="~{base::links}"></span>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="${indexName}"></title>
+</head>
+
+<body>
+	<div class="text-white p-2" style="background: #1a9b85;">
+		<h3 style="font-family: 'Roboto'">Payroll Management System</h3>
+	</div>
+	<nav th:replace="~{base::adminNavs}"></nav>
+	<div class="row m-3" style="margin-right: 0px;">
+		<div class="col-md-5 text-center p-4">
+			<img src="/images/employees.png" alt="" class="pt-4 img-fluid rounded" style="height: 25em;" />
+		</div>
+		<div class="col-md">
+			<div class="card mt-2 shadow-lg bg-body-tertiary rounded">
+				<div class="card-header text-center" style="font-family: 'Roboto';font-size: x-large;"
+					th:text="${currentDesc}"></div>
+				<div class="card-body" th:object="${obj}">
+					<div class="row"><small class="d-flex justify-content-end text-danger">All fields are mandatory
+							!!</small></div>
+					<form th:action="${url}" method="post" enctype="multipart/form-data">
+						<div class="row">
+							<div class="col-md">
+								<div class="form-group mt-1">
+									<label for="" class="labels mt-1">Employee id :</label>
+									<input type="text" th:attr="readonly=${condition} ? 'readonly' : null" name="employeeId" th:value="${obj.employeeId}" id=""
+										class="mt-2 form-control">
+								</div>
+								<div class="form-group mt-1">
+									<label for="" class="labels mt-1">Firstname :</label>
+									<input type="text" name="firstName" th:value="${obj.firstName}" id=""
+										class="mt-2 form-control">
+								</div>
+								<div class="form-group mt-1">
+									<label for="" class="labels mt-1">Lastname :</label>
+									<input type="text" name="lastName" th:value="${obj.lastName}" id=""
+										class="mt-2 form-control">
+								</div>
+								<div class="form-group mt-1">
+									<label for="" class="labels mt-1">Gender :</label>
+									<input type="text" name="gender" th:value="${obj.gender}" id=""
+										class="mt-2 form-control">
+								</div>
+								<div class="form-group mt-1">
+									<label for="" class="labels mt-1">Department id :</label>
+									<input type="text" name="departmentId" th:value="${departmentId}" id=""
+										class="mt-2 form-control">
+								</div>
+								<div class="form-group mt-1">
+									<label for="" class="labels mt-1">Pic :</label>
+									<div class="text-danger" th:if="${addPicDescription}" >
+										Previous pic ->
+										<img th:src="@{'/employee-images/'+${obj.employeePic}}" style="width: 50px;height: 50px;" alt="" />		
+									</div>
+									<input type="text" name="employeePic" th:value="${obj.employeePic}" id=""
+										class="mt-2 form-control invisible">
+									<input th:if="${showFileView}" type="file" name="file" id="" class="mt-2 form-control">
+								</div>
+							</div>
+							<div class="col-md">
+								<div class="form-group mt-1">
+									<label for="" class="labels mt-1">Mobile :</label>
+									<input type="text" name="mobile" th:value="${obj.mobile}" id=""
+										class="mt-2 form-control">
+								</div>
+								<div class="form-group mt-1">
+									<label for="" class="labels mt-1">Date of birth :</label>
+									<input type="date" name="dateOfBirth" th:value="${obj.dateOfBirth}" id=""
+										class="mt-2 form-control">
+								</div>
+								<div class="form-group mt-1">
+									<label for="" class="labels mt-1">Contact Address :</label>
+									<input type="text" name="contactAddress" th:value="${obj.contactAddress}" id=""
+										class="mt-2 form-control">
+								</div>
+								<div class="form-group mt-1">
+									<label for="" class="labels mt-1">Password :</label>
+									<input type="text" name="password" th:value="${obj.password}" id=""
+										class="mt-2 form-control">
+								</div>
+								<div class="form-group mt-1">
+									<label for="" class="labels mt-1">Designation name :</label>
+									<input type="text" name="designationName" th:value="${designationName}" id=""
+										class="mt-2 form-control">
+								</div>
+							</div>
+						</div>
+						<div class="text-center mt-3">
+							<button class="btn btn-success" type="submit">OK</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-1"></div>
+	</div>
+	<th:block th:if="${message}">
+		<script>
+			var msg = '[[${message}]]';
+			swal("Error", msg, "error");
+		</script>
+	</th:block>
+	<th:block th:if="${submitOk}">
+		<script>
+			var msg = '[[${submitOk}]]';
+			swal("Success", msg, "success");
+		</script>
+	</th:block>
+</body>
+
+</html>

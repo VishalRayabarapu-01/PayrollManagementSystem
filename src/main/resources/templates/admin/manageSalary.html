@@ -14,45 +14,50 @@
 	</div>
 	<nav th:replace="~{base::adminNavs}"></nav>
 	<div class="text-center p-3">
-		<span style="font-family: 'Lora' ; font-size: x-large;">Viewing Designations :-</span>
+		<span style="font-family: 'Lora' ; font-size: x-large;">Viewing Employee Details :-</span>
 	</div>
-	<div class="container p-2">
-		<table class="table table-hover overflow-scroll">
+	<div class="container p-2 table-responsive">
+		<table class="table table-hover">
 			<thead>
 				<tr class="text-center">
-					<th scope="col">Designation Id</th>
-					<th scope="col">Designation Name</th>
-					<th scope="col">Edit</th>
+					<th scope="col">Salary id</th>
+					<th scope="col">BasicSalary</th>
+					<th scope="col">HRA</th>
+					<th scope="col">DA</th>
+					<th scope="col">PF</th>
+					<th scope="col">IncomeTaxPercentage</th>
+					<th scope="col">Healthinsurance</th>
+					<th scope="col">OverTimePerHourPay</th>
 					<th scope="col">Delete</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr style="font-family: 'Poppins';" class="text-center" th:if="${listOfDesignations}" th:each="list : ${listOfDesignations}">
-					<td th:text="'#NUM'+${list.designationId}"></td>
-					<td th:text="${list.designationName}"></td>
+				<tr style="font-family: 'Poppins';" class="text-center" th:if="${listOfSalary}"
+					th:each="list : ${listOfSalary}">
+					<td th:text="'#NUM'+${list.salaryId}"></td>
+					<td th:text="${list.basicSalary}"></td>
+					<td th:text="${list.hra}"></td>
+					<td th:text="${list.da}"></td>
+					<td th:text="${list.pf}"></td>
+					<td th:text="${list.incomeTaxPercentage}"></td>
+					<td th:text="${list.healthinsurance}"></td>
+					<td th:text="${list.overTimePerHourPay}"></td>
 					<td>
-						<form method="post" th:action="@{'/admin/editDesignation/'+${list.designationId}}">
-							<button type="submit" class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i>
-								Edit</button>
-						</form>
-					</td>
-					<td>
-						<button th:onclick="'clickedBtn('+${list.designationId}+')'"
-							class="btn btn-sm btn-outline-danger">
+						<button th:onclick="'clickedBtn('+${list.salaryId}+')'" class="btn btn-sm btn-outline-danger">
 							<i class="fa-solid fa-circle-xmark"></i> Delete
 						</button>
-						<a class="invisible" th:id="${list.designationId}"
-							th:href="@{'/admin/deleteDesignation/'+${list.designationId}}"></a>
+						<a class="invisible" th:id="${list.salaryId}"
+							th:href="@{'/admin/deleteSalary/'+${list.salaryId}}"></a>
 					</td>
 				</tr>
 			</tbody>
 		</table>
-		<div class="text-center" th:unless="${listOfDesignations}">
+		<div class="text-center" th:unless="${listOfSalary}">
 			<img src="/images/noData.jpg" class="img-fluid " alt="" />
 		</div>
 	</div>
 	<script>
-		const clickedBtn = (designationId) => {
+		const clickedBtn = (empId) => {
 			Swal.fire({
 				title: 'Are you sure?',
 				text: "Deleting Designation removes all employees present in current designation !!!",
@@ -63,7 +68,7 @@
 				confirmButtonText: 'Yes, delete it!'
 			}).then((result) => {
 				if (result.isConfirmed) {
-					let link = document.getElementById(designationId + "");
+					let link = document.getElementById(empId + "");
 					if (link) {
 						link.click();
 					}

@@ -8,6 +8,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.payroll.entities.Department;
 import com.payroll.entities.Designation;
+import com.payroll.entities.Employee;
+import com.payroll.entities.Salary;
 
 @ControllerAdvice
 public class HandlerExceptions {
@@ -18,10 +20,20 @@ public class HandlerExceptions {
 	@Autowired
 	Designation designation;
 	
+	@Autowired
+	Employee employee;
+	
+	@Autowired
+	Salary salary;
+	
 	//complete this classs
 	@ExceptionHandler(EmployeeException.class)
-    public ModelAndView exceptionHandler() {
-        return new ModelAndView("");
+    public ModelAndView exceptionHandler(Model model,EmployeeException employeeException) {
+		model.addAttribute("indexName","Add Employee");
+		model.addAttribute("currentDesc","Add Employee :-");
+		model.addAttribute("obj",employee);
+		model.addAttribute("message",employeeException.getTotalDesc());
+		return new ModelAndView("admin/addEmployee");
     }
 	
 	@ExceptionHandler(DepartmentException.class)
@@ -38,9 +50,19 @@ public class HandlerExceptions {
 		model.addAttribute("indexName","Add Designation");
 		model.addAttribute("currentDesc","Add Designation :-");
 		model.addAttribute("obj",designation);
-		model.addAttribute("url", "/admin/editDesignationDetails");
+		model.addAttribute("url", "/admin/addDesignationDetails");
 		model.addAttribute("message",designationException.getTotalDesc());
 		return new ModelAndView("admin/addDesignation");
+    }
+	
+	@ExceptionHandler(SalaryException.class)
+    public ModelAndView desigException(Model model,SalaryException salaryException) {
+		model.addAttribute("indexName","Add Salary");
+		model.addAttribute("currentDesc","Add Salary/Manage Salary :-");
+		model.addAttribute("obj",salary);
+		model.addAttribute("url", "/admin/addSalaryDetails");
+		model.addAttribute("message",salaryException.getTotalDesc());
+		return new ModelAndView("admin/addSalary");
     }
 	
 }

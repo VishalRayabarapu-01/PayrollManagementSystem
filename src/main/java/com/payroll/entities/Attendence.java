@@ -1,7 +1,5 @@
 package com.payroll.entities;
 
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
@@ -25,7 +23,7 @@ public class Attendence {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int attendanceId;
 	
-	private Date date;
+	private String date;
 	
 	private String attendanceStatus;
 	
