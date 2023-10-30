@@ -40,5 +40,5 @@ public class ConfigClass {
 	public OverTimeAttendence getOverAttendence() {
 		return new OverTimeAttendence();
 	}
-	
+
 }

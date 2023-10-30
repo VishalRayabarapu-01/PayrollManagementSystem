@@ -29,6 +29,8 @@ public class OverTimeAttendence {
 	
 	private String OutTime;
 	
+	private int noOfHrs;
+	
 	@ManyToOne
 	@JsonBackReference(value="OverTimeAttendence-ref")
 	Employee overTimeAttendence;

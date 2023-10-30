@@ -30,6 +30,8 @@ public class Attendence {
 	@ManyToOne
 	@JsonBackReference(value="attendence-ref")
 	Employee employeeAttendence;
+	
+	private String employeeId;
 
 	@Override
 	public String toString() {

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<span data-th-insert="~{base::links}"></span>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="${indexName}"></title>
+</head>
+
+<body>
+	<div class="text-white p-2" style="background: #1a9b85;">
+		<h3 style="font-family: 'Roboto'">Payroll Management System</h3>
+	</div>
+	<nav th:replace="~{base::adminNavs}"></nav>
+	<div class="text-center p-3">
+		<span style="font-family: 'Lora' ; font-size: x-large;">Viewing Employee Details :-</span>
+	</div>
+	<div class="m-2 p-2 table-responsive">
+		<table class="table table-hover">
+			<thead>
+				<tr class="text-center">
+					<th scope="col">Payroll id</th>
+					<th scope="col">Billing date</th>
+					<th scope="col">BasicSalary</th>
+					<th scope="col">Working days</th>
+					<th scope="col">Present days</th>
+					<th scope="col">HRA</th>
+					<th scope="col">DA</th>
+					<th scope="col">PF</th>
+					<th scope="col">IncomeTaxAmount</th>
+					<th scope="col">Loss Of Pay</th>
+					<th scope="col">Healthinsurance</th>
+					<th scope="col">Overtime HoursWorked</th>
+					<th scope="col">Overtime amount</th>
+					<th scope="col">Gross Salary</th>
+					<th scope="col">Total Deductions</th>
+					<th scope="col">Net Salary</th>
+					<th scope="col">year</th>
+					<th scope="col">Month</th>
+					<th scope="col">Employee id</th>
+					<th scope="col">Delete</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr style="font-family: 'Poppins';" class="text-center" th:if="${listOfPayrolls}"
+					th:each="list : ${listOfPayrolls}">
+					<td th:text="'#NUM'+${list.payrollId}"></td>
+					<td th:text="${list.payDate}"></td>
+					<td th:text="${list.basicSalary}"></td>
+					<td th:text="${list.workingDays}"></td>
+					<td th:text="${list.presentDays}"></td>
+					<td th:text="${list.hra}"></td>
+					<td th:text="${list.da}"></td>
+					<td th:text="${list.pf}"></td>
+					<td th:text="${list.incomeTaxAmount}"></td>
+					<td th:text="${list.lossOfPay}"></td>
+					<td th:text="${list.healthinsurance}"></td>
+					<td th:text="${list.overTimeHoursWorked}"></td>
+					<td th:text="${list.overTimeAmount}"></td>
+					<td th:text="${list.grossSalary}"></td>
+					<td th:text="${list.totalDeductions}"></td>
+					<td th:text="${list.netSalary}"></td>
+					<td th:text="${list.year}"></td>
+					<td th:text="${list.month}"></td>
+					<td th:text="${list.employee.employeeId}"></td>
+					<td>
+						<button th:onclick="'clickedBtn('+${list.payrollId}+')'" class="btn btn-sm btn-outline-danger">
+							<i class="fa-solid fa-circle-xmark"></i> Delete
+						</button>
+						<a class="invisible" th:id="${list.payrollId}"
+							th:href="@{'/admin/deletePayroll/'+${list.payrollId}}"></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="text-center" th:unless="${listOfPayrolls}">
+			<img src="/images/noData.jpg" class="img-fluid " alt="" />
+		</div>
+	</div>
+	<script>
+		const clickedBtn = (empId) => {
+			Swal.fire({
+				title: 'Are you sure?',
+				text: "Deleting Designation removes all employees present in current designation !!!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes, delete it!'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					let link = document.getElementById(empId + "");
+					if (link) {
+						link.click();
+					}
+				}
+			})
+		}
+	</script>
+	<th:block th:if="${message}">
+		<script>
+			var msg = '[[${message}]]';
+			swal("Error", msg, "error");
+		</script>
+	</th:block>
+	<th:block th:if="${submitOk}">
+		<script>
+			var msg = '[[${submitOk}]]';
+			swal("Success", msg, "success");
+		</script>
+	</th:block>
+</body>
+
+</html>

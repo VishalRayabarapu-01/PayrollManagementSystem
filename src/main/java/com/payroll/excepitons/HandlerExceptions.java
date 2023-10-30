@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.payroll.entities.Attendence;
 import com.payroll.entities.Department;
 import com.payroll.entities.Designation;
 import com.payroll.entities.Employee;
@@ -25,6 +26,10 @@ public class HandlerExceptions {
 	
 	@Autowired
 	Salary salary;
+	
+	@Autowired
+	Attendence attendence;
+	
 	
 	//complete this classs
 	@ExceptionHandler(EmployeeException.class)
@@ -65,4 +70,22 @@ public class HandlerExceptions {
 		return new ModelAndView("admin/addSalary");
     }
 	
+	@ExceptionHandler(LeavesException.class)
+    public ModelAndView LeavesExeprion(Model model,LeavesException exception) {
+		model.addAttribute("message",exception.getTotalDesc());
+		return new ModelAndView("admin/manageLeaves");
+    }
+	@ExceptionHandler(PayrollException.class)
+    public ModelAndView payrollException(Model model,PayrollException payrollException) {
+		model.addAttribute("message",payrollException.getTotalDesc());
+		return new ModelAndView("admin/addPayroll");
+    }
+	@ExceptionHandler(AttendenceException.class)
+    public ModelAndView attendence(Model model,AttendenceException attendenceException) {
+		model.addAttribute("message",attendenceException.getTotalDesc());
+		model.addAttribute("indexName","Add Attendence");
+		model.addAttribute("currentDesc","Add Attendence :-");
+		model.addAttribute("obj",attendence);
+		return new ModelAndView("admin/addAttendence");
+    }
 }

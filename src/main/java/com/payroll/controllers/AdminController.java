@@ -7,8 +7,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.ui.Model;
@@ -20,12 +23,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.payroll.entities.Attendence;
 import com.payroll.entities.Department;
 import com.payroll.entities.Designation;
 import com.payroll.entities.Employee;
 import com.payroll.entities.Leaves;
 import com.payroll.entities.OverTimeAttendence;
+import com.payroll.entities.PayRoll;
 import com.payroll.entities.Salary;
 import com.payroll.excepitons.DepartmentException;
 import com.payroll.excepitons.DesignationException;
@@ -36,6 +41,7 @@ import com.payroll.service.DesignationService;
 import com.payroll.service.EmployeeService;
 import com.payroll.service.LeavesService;
 import com.payroll.service.OverTimeAttendenceService;
+import com.payroll.service.PayRollService;
 import com.payroll.service.SalaryService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -235,7 +241,7 @@ public class AdminController {
 		model.addAttribute("indexName", "Add Employee");
 		model.addAttribute("currentDesc", "Add Employee :-");
 		model.addAttribute("obj", employee);
-		model.addAttribute("showFileView",true);
+		model.addAttribute("showFileView", true);
 		model.addAttribute("url", "/admin/addEmployeeDetails");
 		return new ModelAndView("admin/addEmployee");
 	}
@@ -325,14 +331,13 @@ public class AdminController {
 		model.addAttribute("departmentId", employee2.getDepartment().getDepartmentId());
 		return new ModelAndView("admin/addEmployee");
 	}
-	
-	
+
 	@PostMapping("/updateDetails")
-	public ModelAndView updateDetails(Model model,@ModelAttribute Employee employee){
-		if(employeeService.updateEmployee(employee)) {
+	public ModelAndView updateDetails(Model model, @ModelAttribute Employee employee) {
+		if (employeeService.updateEmployee(employee)) {
 			model.addAttribute("submitOk", "Employee details updated successfully");
-		}else {
-			model.addAttribute("message","Error occured while updation Try Again!!!");
+		} else {
+			model.addAttribute("message", "Error occured while updation Try Again!!!");
 		}
 		return addEmp(model);
 	}
@@ -362,6 +367,7 @@ public class AdminController {
 			} else {
 				attendence.setAttendanceStatus("A");
 			}
+			attendence.setEmployeeId(e.getEmployeeId());
 			attendence.setDate(attendeceDate);
 			attendence.setEmployeeAttendence(e);
 			e.getAttendence().add(attendence);
@@ -449,14 +455,14 @@ public class AdminController {
 
 	@PostMapping("/addOvertimeAttendeneDetails")
 	public ModelAndView addOAttendenceDetails(@ModelAttribute Employee employee,
-			@ModelAttribute OverTimeAttendence attendence,Model model) {
+			@ModelAttribute OverTimeAttendence attendence, Model model) {
 		if (overTimeAttendenceService.addOverTimeAttendence(attendence, employee.getEmployeeId())) {
 			model.addAttribute("submitOk", "Department added successfully");
 			model.addAttribute("obj", this.overTimeAttendence);
 			model.addAttribute("employeeId", "");
 		} else {
 			model.addAttribute("obj", attendence);
-			model.addAttribute("employeeId",employee.getEmployeeId());
+			model.addAttribute("employeeId", employee.getEmployeeId());
 		}
 		model.addAttribute("indexName", "Add Overtime Attendence");
 		model.addAttribute("currentDesc", "Add Overtime Attendence :-");
@@ -473,7 +479,7 @@ public class AdminController {
 		model.addAttribute("indexName", "Manage OverTime Attendence");
 		return new ModelAndView("admin/manageOverTimeAttendence");
 	}
-	
+
 	@GetMapping("/deleteOvertimeAttendence/{id}")
 	public ModelAndView delOvertimeAttendence(@PathVariable int id, Model model) {
 		if (overTimeAttendenceService.deleteOverTimeAttendence(id)) {
@@ -481,10 +487,10 @@ public class AdminController {
 		}
 		return manageoverTimeAttendence(model);
 	}
-	
+
 	@Autowired
 	LeavesService leavesService;
-	
+
 	@GetMapping("/showLeaves")
 	public ModelAndView getLeaves(Model model) {
 		List<Leaves> allLeaves = leavesService.getAllLeaves();
@@ -494,20 +500,87 @@ public class AdminController {
 		model.addAttribute("indexName", "Manage leaves");
 		return new ModelAndView("admin/manageLeaves");
 	}
-	
+
 	@PostMapping("/acceptLeave/{id}")
-	public ModelAndView updateLeave(@PathVariable int id,Model model) {
-		if(leavesService.updateLeave(id)) {
+	public ModelAndView updateLeave(@PathVariable int id, Model model) {
+		if (leavesService.updateLeave(id)) {
 			model.addAttribute("submitOk", "Leave Granted Successfuly");
 		}
 		return getLeaves(model);
 	}
-	
+
 	@GetMapping("/deleteLeave/{id}")
-	public ModelAndView deleteLeave(@PathVariable int id,Model model) {
-		if(leavesService.deleteLeave(id)) {
+	public ModelAndView deleteLeave(@PathVariable int id, Model model) {
+		if (leavesService.deleteLeave(id)) {
 			model.addAttribute("submitOk", "Leave Rejected Successfuly");
 		}
 		return getLeaves(model);
+	}
+
+	@Autowired
+	PayRollService payRollService;
+	
+	@GetMapping("/generatePayroll")
+	public ModelAndView generatePayroll(Model model) {
+		model.addAttribute("indexName", "Generate Payroll");
+		model.addAttribute("currentDesc", "Generate Payroll :-");
+		return new ModelAndView("admin/addPayroll");
+	}
+
+	@PostMapping("/createPayroll")
+	public ModelAndView createPayroll(Model model, HttpServletRequest request) {
+		String year = request.getParameter("year");
+		String month = request.getParameter("month");
+		if (year.equals("Year") || month.equals("Month")) {
+			model.addAttribute("Invalid fields", "for month and year !!!");
+			return generatePayroll(model);
+		}
+		List<Employee> employees = employeeService.getEmployees();
+		int yr=Integer.parseInt(year);
+		int mnth=Integer.parseInt(month);
+		String todaysDate=LocalDate.now().toString();
+		for (Employee e : employees) {
+			Salary salary2 = e.getDesignation().getSalary();
+			List<Attendence> attendence2 = e.getAttendence();
+			int presentDays = attendence2.stream().filter(a -> a.getAttendanceStatus().equals("P"))
+					.collect(Collectors.toList()).size();
+			int absentDays = attendence2.size() - presentDays;
+			Double perDayAmount = (salary2.getBasicSalary() / 30);
+			Double totalNoOfOverTimeHrs = e.getOverTimeAttendence().stream().mapToDouble(OverTimeAttendence::getNoOfHrs)
+					.sum();
+			Double overTimeAmount = (salary2.getOverTimePerHourPay() * totalNoOfOverTimeHrs);
+			Double lossOfPay = absentDays * perDayAmount;
+			Double netSalary = overTimeAmount + salary2.getBasicSalary() + salary2.getHra() + salary2.getDa()
+					- salary2.getPf() - salary2.getHealthinsurance() - lossOfPay;
+			Double incomeTaxAmount = netSalary * (salary2.getIncomeTaxPercentage() / 100);
+			Double grossSalary = salary2.getBasicSalary() + overTimeAmount + salary2.getHra() + salary2.getDa();
+			Double totalDeductions = salary2.getPf() + salary2.getHealthinsurance() + incomeTaxAmount - lossOfPay;
+			netSalary = (grossSalary - totalDeductions);
+			PayRoll payRoll = new PayRoll(todaysDate, attendence2.size(), presentDays, salary2.getBasicSalary(), salary2.getHra(),
+					salary2.getDa(), salary2.getPf(), incomeTaxAmount, lossOfPay, salary2.getHealthinsurance(),
+					totalNoOfOverTimeHrs, overTimeAmount, grossSalary, totalDeductions, netSalary,"null", yr,
+					mnth, e);
+			payRollService.addPayroll(payRoll);
+		}
+		model.addAttribute("submitOk", "Payroll Generated Successfully");
+		return generatePayroll(model);
+	}
+	
+	@GetMapping("/managePayroll")
+	public ModelAndView managePayroll(Model model) {
+		List<PayRoll> allPayrolls = payRollService.getAllPayrolls();
+		if (allPayrolls.size() > 0) {
+			model.addAttribute("listOfPayrolls", allPayrolls);
+		}
+		model.addAttribute("indexName", "Manage Payrolls");
+		return new ModelAndView("admin/managePayrolls");
+	}
+	
+	@GetMapping("/deletePayroll/{id}")
+	public ModelAndView deletePayroll(@PathVariable int id, Model model) {
+		if (payRollService.deletePayroll(id)) {
+			model.addAttribute("submitOk", "Payroll Deleted Successfuly");
+		}
+		return managePayroll(model);
 	}
 }

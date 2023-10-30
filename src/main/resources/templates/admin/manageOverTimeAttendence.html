@@ -25,6 +25,7 @@
 					<th scope="col">InTime</th>
 					<th scope="col">OutTime</th>
 					<th scope="col">Employee id</th>
+					<th scope="col">No of hours</th>
 					<th scope="col">Delete</th>
 				</tr>
 			</thead>
@@ -35,6 +36,7 @@
 					<td th:text="${list.inTime}"></td>
 					<td th:text="${list.outTime}"></td>
 					<td th:text="${list.overTimeAttendence.employeeId}"></td>
+					<td th:text="${list.noOfHrs}"></td>
 					<td>
 						<button th:onclick="'clickedBtn('+${list.overtimeId}+')'"
 							class="btn btn-sm btn-outline-danger">
