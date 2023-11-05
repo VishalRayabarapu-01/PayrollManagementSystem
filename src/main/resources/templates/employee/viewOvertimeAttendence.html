@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<span data-th-insert="~{base::links}"></span>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="${indexName}"></title>
+</head>
+
+<body>
+	<div class="text-white p-2" style="background: #1a9b85;">
+		<h3 style="font-family: 'Roboto'">Payroll Management System</h3>
+	</div>
+	<nav th:replace="~{base::employeeNavs}"></nav>
+	<div class="text-center p-3">
+		<span style="font-family: 'Lora' ; font-size: x-large;">Viewing Overtime Attendence :-</span>
+	</div>
+	<div class="container p-2">
+		<table class="table table-hover overflow-scroll" id='table_id'>
+			<thead>
+				<tr class="text-center">
+					<th scope="col">Overtime Attendence Id</th>
+					<th scope="col">Date</th>
+					<th scope="col">InTime</th>
+					<th scope="col">OutTime</th>
+					<th scope="col">No of hours</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr style="font-family: 'Poppins';" class="text-center" th:if="${listOfAttendences}" th:each="list : ${listOfAttendences}">
+					<td th:text="'#NUM'+${list.overtimeId}"></td>
+					<td th:text="${list.date}"></td>
+					<td th:text="${list.inTime}"></td>
+					<td th:text="${list.outTime}"></td>
+					<td th:text="${list.noOfHrs}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script>
+		$(document).ready(function () {
+			$('#table_id').DataTable({order: []});
+
+		});
+	</script>
+</body>
+
+</html>

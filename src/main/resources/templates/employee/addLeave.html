@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<span data-th-insert="~{base::links}"></span>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="${indexName}"></title>
+</head>
+
+<body>
+	<div class="text-white p-2" style="background: #1a9b85;">
+		<h3 style="font-family: 'Roboto'">Payroll Management System</h3>
+	</div>
+	<nav th:replace="~{base::employeeNavs}"></nav>
+	<div class="row m-4" style="margin-right: 0px;">
+		<div class="col-md text-center">
+			<img src="/images/leave.png" alt="" class="img-fluid rounded" style="height: 25em;" />
+		</div>
+		<div class="col-md ">
+			<div class="card mt-5 shadow-lg bg-body-tertiary rounded">
+				<div class="card-header text-center" style="font-family: 'Roboto';font-size: x-large;"
+					th:text="${currentDesc}"></div>
+				<div class="card-body" th:object="${obj}">
+					<form th:action="${url}" method="post">
+						<div class="row">
+							<div class="col">
+								<div class="form-group mt-1">
+									<label for="" class="labels mt-1">Leave type :</label>
+									<input type="text" required name="leaveType" th:value="${obj.leaveType}"
+										class="mt-2 form-control">
+								</div>
+								<div class="form-group mt-1">
+									<label for="" class="labels mt-1">Leave StartDate :</label>
+									<input type="date" required name="leaveStartDate" th:value="${obj.leaveStartDate}"
+										class="mt-2 form-control">
+								</div>
+							</div>
+							<div class="col">
+								<div class="form-group mt-1">
+									<label for="" class="labels mt-1">Days :</label>
+									<input type="text" required name="days" th:value="${obj.days}"
+										class="mt-2 form-control">
+								</div>
+								<div class="form-group mt-1">
+									<label for="" class="labels mt-1">Leave EndDate :</label>
+									<input type="date" required name="leaveEndDate" th:value="${obj.leaveEndDate}"
+										class="mt-2 form-control">
+								</div>
+							</div>
+							<div class="form-group mt-1">
+								<label for="" class="labels mt-1">Purpose :</label>
+								<textarea name="leavepurpose" required class="mt-2 form-control"  th:value="${obj.leavepurpose}" cols="20" rows="3"></textarea>
+							</div>
+						</div>
+						<div class="text-center mt-3">
+							<button class="btn btn-success" type="submit">OK</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-1"></div>
+	</div>
+	<th:block th:if="${message}">
+		<script>
+			var msg = '[[${message}]]';
+			swal("Error", msg, "error");
+		</script>
+	</th:block>
+	<th:block th:if="${submitOk}">
+		<script>
+			var msg = '[[${submitOk}]]';
+			swal("Success", msg, "success");
+		</script>
+	</th:block>
+</body>
+
+</html>

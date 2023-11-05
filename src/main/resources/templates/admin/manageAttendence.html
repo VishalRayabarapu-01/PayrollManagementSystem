@@ -14,10 +14,10 @@
 	</div>
 	<nav th:replace="~{base::adminNavs}"></nav>
 	<div class="text-center p-3">
-		<span style="font-family: 'Lora' ; font-size: x-large;">Viewing Departments :-</span>
+		<span style="font-family: 'Lora' ; font-size: x-large;">Viewing Attendence :-</span>
 	</div>
 	<div class="container p-2">
-		<table class="table table-hover overflow-scroll">
+		<table class="table table-hover overflow-scroll" id='table_id'>
 			<thead>
 				<tr class="text-center">
 					<th scope="col">Attendence id</th>
@@ -67,6 +67,12 @@
 				}
 			})
 		}
+	</script>
+	<script>
+		$(document).ready(function () {
+			$('#table_id').DataTable({order: []});
+
+		});
 	</script>
 	<th:block th:if="${message}">
 		<script>

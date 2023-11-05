@@ -20,6 +20,9 @@
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+		<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 	</div>
 	<div>
 		<nav class="navbar navbar-expand-lg navbar-success bg-light p-3" th:fragment="adminNavs">
@@ -132,6 +135,16 @@
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/employee/payslips">Payslips</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="employeeDropdown" role="button"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Leaves
+						</a>
+						<div class="dropdown-menu" aria-labelledby="employeeDropdown">
+							<a class="dropdown-item" href="/employee/addLeave">Add</a>
+							<a class="dropdown-item" href="/employee/viewLeaves">View</a>
+						</div>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link text-danger" href="/logout">Logout</a>

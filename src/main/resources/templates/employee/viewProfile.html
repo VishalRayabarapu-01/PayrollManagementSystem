@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<span data-th-insert="~{base::links}"></span>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="${indexName}"></title>
+</head>
+
+<body>
+	<div class="text-white p-2" style="background: #1a9b85;">
+		<h3 style="font-family: 'Roboto'">Payroll Management System</h3>
+	</div>
+	<nav th:replace="~{base::employeeNavs}"></nav>
+	<div class="container mt-3 rounded-3">
+		<div class="card rounded shadow-lg">
+			<div class="row p-5" style="background-color: #e2e2e2;">
+				<div class="col-md text-center">
+					<img th:src="@{'/employee-images/'+${obj.employeePic}}" alt="Image of employeee"
+						style="border-radius: 30px;width: 15em;height: 15em;" />
+				</div>
+				<div class="col-8" style="font-family: 'Poppins';">
+					<h2 class="m-3" th:text="${obj.employeeId}"></h2>
+					<table class="table p-4  m-3 table-responsive fw-bold">
+						<tbody>
+							<tr>
+								<td>Firstname</td>
+								<td>:</td>
+								<td th:text="${obj.firstName}"></td>
+							</tr>
+							<tr>
+								<td>lastname</td>
+								<td>:</td>
+								<td th:text="${obj.lastName}"></td>
+							</tr>
+							<tr>
+								<td>Gender</td>
+								<td>:</td>
+								<td th:text="${obj.gender}"></td>
+							</tr>
+							<tr>
+								<td>Mobile</td>
+								<td>:</td>
+								<td th:text="${obj.mobile}"></td>
+							</tr>
+							<tr>
+								<td>Date of Birth</td>
+								<td>:</td>
+								<td th:text="${obj.dateOfBirth}"></td>
+							</tr>
+							<tr>
+								<td>Address</td>
+								<td>:</td>
+								<td th:text="${obj.contactAddress}"></td>
+							</tr>
+							<tr>
+								<td>Password</td>
+								<td>:</td>
+								<td th:text="${obj.password}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -9,7 +9,7 @@ import com.payroll.entities.Leaves;
 @Service
 public interface LeavesService {
 
-	boolean addLeaves(Leaves leave,String employeeId);
+	boolean addLeaves(Leaves leave);
 	
 	boolean deleteLeave(int leaveId);
 	

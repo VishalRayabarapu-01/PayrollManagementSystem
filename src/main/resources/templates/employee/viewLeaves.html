@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<span data-th-insert="~{base::links}"></span>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="${indexName}"></title>
+</head>
+
+<body>
+	<div class="text-white p-2" style="background: #1a9b85;">
+		<h3 style="font-family: 'Roboto'">Payroll Management System</h3>
+	</div>
+	<nav th:replace="~{base::employeeNavs}"></nav>
+	<div class="text-center p-3">
+		<span style="font-family: 'Lora' ; font-size: x-large;">Viewing Payrolls :-</span>
+	</div>
+	<div class="m-2 p-2 table-responsive">
+		<table class="table table-hover" id='table_id'>
+			<thead>
+				<tr class="text-center">
+					<th scope="col">Leave id</th>
+					<th scope="col">Leave Type</th>
+					<th scope="col">Start Date</th>
+					<th scope="col">End Date</th>
+					<th scope="col">Days</th>
+					<th scope="col">Purpose</th>
+					<th scope="col">Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr style="font-family: 'Poppins';" class="text-center" th:if="${listOfLeaves}"
+					th:each="list : ${listOfLeaves}">
+					<td th:text="${list.leaveId}"></td>
+					<td th:text="${list.leaveType}"></td>
+					<td th:text="${list.leaveStartDate}"></td>
+					<td th:text="${list.leaveEndDate}"></td>
+					<td th:text="${list.days}"></td>
+					<td th:text="${list.leavepurpose}"></td>
+					<td th:text="${list.leaveStatus}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script>
+		$(document).ready(function () {
+			$('#table_id').DataTable({order: []});
+
+		});
+	</script>
+</body>
+
+</html>

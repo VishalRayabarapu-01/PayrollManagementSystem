@@ -7,6 +7,7 @@ import com.payroll.entities.Attendence;
 import com.payroll.entities.Department;
 import com.payroll.entities.Designation;
 import com.payroll.entities.Employee;
+import com.payroll.entities.Leaves;
 import com.payroll.entities.OverTimeAttendence;
 import com.payroll.entities.Salary;
 
@@ -41,4 +42,8 @@ public class ConfigClass {
 		return new OverTimeAttendence();
 	}
 
+	@Bean
+	public Leaves getLeave() {
+		return new Leaves();
+	}
 }
